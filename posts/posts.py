@@ -1,4 +1,5 @@
 from database.database import db, Post
+from time import time
 
 def get_post(post_id):
     post = Post.query.filter_by(id=post_id).first()
@@ -8,6 +9,8 @@ def get_post(post_id):
 
 def create_post(user_id, title, content):
     post = Post(user_id, title, content)
+
+    post.updated = int(time())
 
     db.session.add(post)
     db.session.commit()
@@ -19,6 +22,8 @@ def update_post(post_id, title, content):
 
     post.title = title
     post.content = content
+
+    post.updated = int(time())
 
     db.session.commit()
 

@@ -7,6 +7,7 @@ from markdown import markdown
 from factory.app_creator import init_app
 from users.users import get_user, get_user_with_username, create_user, should_login
 from posts.posts import list_posts
+from posts.timing_helper import calculate_time_ago
 
 from blueprints.posts import post_pages
 
@@ -49,6 +50,7 @@ def onHome():
 
     data = {
         'posts': posts,
+        'time_ago': calculate_time_ago,
     }
 
     return render('index.html', **data)

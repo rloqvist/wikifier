@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     pw_hash = db.Column(db.String(160))
     posts = db.relationship("Post", backref="user")
+    votes = db.relationship("Vote", backref="user")
 
     def __init__(self, username, password):
         self.username = username
@@ -32,6 +33,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     title = db.Column(db.String(200), unique=True)
     content = db.Column(db.String(10000))
+    updated = db.Column(db.Integer, nullable=False)
     comments = db.relationship("Comment", backref="post")
     votes = db.relationship("Vote", backref="post")
     tags = db.relationship("Tag", backref="post")
