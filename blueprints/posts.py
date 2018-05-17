@@ -4,6 +4,7 @@ from flask_login import login_required, current_user
 from markdown import markdown
 
 from posts.posts import create_post, get_post, delete_post, update_post
+from posts.votes import vote, has_voted
 
 post_pages = Blueprint('post_pages', __name__, template_folder='templates')
 
@@ -26,14 +27,14 @@ def onCreatePost():
 def onViewPost(post_id):
 
     post = get_post(post_id)
+    user_id = current_user.id
 
     if not post:
         return redirect('/post')
 
     data = {
-        'title': post.title,
-        'content': markdown(post.content),
-        'post_id': post_id,
+        'post': post,
+        'voted': has_voted(post_id, current_user.id)
     }
 
     return render('view_post.html', **data)
@@ -60,6 +61,13 @@ def onEditPost(post_id):
         }
 
         return render('edit_post.html', **data)
+
+@post_pages.route('/post/<int:post_id>/vote')
+def onPostVote(post_id):
+    user_id = current_user.id
+    vote_id = vote(post_id, user_id)
+    return redirect(url_for('post_pages.onViewPost', post_id=post_id))
+
 
 @post_pages.route('/post/<int:post_id>/remove')
 def onRemovePost(post_id):

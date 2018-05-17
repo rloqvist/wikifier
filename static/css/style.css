@@ -6,3 +6,15 @@ pre {
 textarea {
   font-family: monospace;
 }
+
+.left.rail {
+  text-align: right !important;
+}
+
+.ui.statistic {
+  text-align: center !important;
+}
+
+#upvote {
+  cursor: pointer;
+}

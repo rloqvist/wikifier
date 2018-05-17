@@ -54,6 +54,11 @@ class Vote(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
 
+    def __init__(self, post_id, user_id):
+        self.post_id = post_id
+        self.user_id = user_id
+
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)

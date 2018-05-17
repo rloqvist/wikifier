@@ -5,18 +5,30 @@
 {% endblock %}
 
 {% block content %}
-<div class="ui container">
-  <h1>{{ title }}</h1>
+<div class="ui container segment">
+  <div class="ui left very close rail">
+    <div class="ui grey statistic">
+      <div class="label">
+        <a href="{{ url_for('post_pages.onPostVote', post_id=post.id) }}">
+          <i class="huge {% if voted %}orange{% else %}grey{% endif %} triangle up icon"></i>
+        </a>
+      </div>
+      <div class="value">
+        {{ post.votes|length }}
+      </div>
+    </div>
+  </div>
+  <h1>{{ post.title }}</h1>
   <div class="ui vertical segment">
 
-    {{ content|safe }}
+    {{ post.content|safe }}
 
     <div class="ui label">IMAX</div>
     <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
   </div>
   <div class="ui horizontal list">
-    <a class="item" href="{{ url_for('post_pages.onEditPost', post_id=post_id) }}">edit</a>
-    <a class="item" href="{{ url_for('post_pages.onRemovePost', post_id=post_id) }}">delete</a>
+    <a class="item" href="{{ url_for('post_pages.onEditPost', post_id=post.id) }}">edit</a>
+    <a class="item" href="{{ url_for('post_pages.onRemovePost', post_id=post.id) }}">delete</a>
   </div>
 </div>
 {% endblock %}
