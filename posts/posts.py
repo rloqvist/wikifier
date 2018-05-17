@@ -43,9 +43,12 @@ def delete_post(post_id):
     votes = Vote.query.filter_by(post_id=post_id).all()
     comments = Comment.query.filter_by(post_id=post_id).all()
 
+    for vote in votes:
+        db.session.delete(vote)
 
-    db.session.delete(votes)
-    db.session.delete(comments)
+    for comment in comments:
+        db.session.delete(comment)
+
     db.session.delete(post)
     db.session.commit()
 
