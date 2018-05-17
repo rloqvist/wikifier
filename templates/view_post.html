@@ -1,11 +1,15 @@
 {% extends "layout.html" %}
 
 {% block head %}
-<title>{{ title }} - Wikifier</title>
+<title>{{ post.title }} - Wikifier</title>
 {% endblock %}
 
 {% block content %}
-<div class="ui container segment">
+<div class="ui container vertical segment">
+  <h1>{{ post.title }}</h1>
+  <small class="ui right floated">Posted {{ time_ago(post.updated) }} by <i>{{ post.user.username }}</i></small>
+</div>
+<div class="ui container vertical segment post-main">
   <div class="ui left very close rail">
     <div class="ui grey statistic">
       <div class="label">
@@ -18,10 +22,9 @@
       </div>
     </div>
   </div>
-  <h1>{{ post.title }}</h1>
   <div class="ui vertical segment">
 
-    {{ post.content|safe }}
+    {{ markdown(post.content)|safe }}
 
     <div class="ui label">IMAX</div>
     <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
@@ -31,6 +34,37 @@
     <a class="item" href="{{ url_for('post_pages.onRemovePost', post_id=post.id) }}">delete</a>
   </div>
 </div>
+
+<div class="ui container vertical segment post-comments">
+  <div class="ui divided list post-comments-content">
+
+    {% for comment in comments %}
+
+      <div class="item">
+        <img class="image">
+        <div class="content">
+          <div class="description post-comments-content-description">
+            {{ markdown(comment.content)|safe }} - <a>{{ comment.user.username }}</a>, <i>{{ time_ago(comment.updated) }}</i>
+            <a href="{{ url_for('post_pages.onRemovePostComment', post_id=post.id, comment_id=comment.id) }}">
+              <i class="grey times circle icon"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+
+  <form class="ui form" method='POST' action="{{ url_for('post_pages.onPostComment', post_id=post.id) }}">
+    <div class="field">
+      <textarea name="content" placeholder="Comment" rows=2></textarea>
+    </div>
+    <button class="ui button" type="submit">Add comment</button>
+  </form>
+
+</div>
+
 {% endblock %}
 
 {% block footer %}

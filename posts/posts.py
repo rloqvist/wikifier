@@ -1,4 +1,4 @@
-from database.database import db, Post
+from database.database import db, Post, Comment, Vote
 from time import time
 
 def get_post(post_id):
@@ -33,6 +33,12 @@ def delete_post(post_id):
     if not post:
         return False
 
+    votes = Vote.query.filter_by(post_id=post_id).all()
+    comments = Comment.query.filter_by(post_id=post_id).all()
+
+
+    db.session.delete(votes)
+    db.session.delete(comments)
     db.session.delete(post)
     db.session.commit()
 

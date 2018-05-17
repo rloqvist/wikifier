@@ -2,7 +2,6 @@ from flask import Flask
 from flask import request, redirect, url_for
 from flask import render_template as render
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from markdown import markdown
 
 from factory.app_creator import init_app
 from users.users import get_user, get_user_with_username, create_user, should_login

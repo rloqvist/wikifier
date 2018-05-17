@@ -18,3 +18,24 @@ textarea {
 #upvote {
   cursor: pointer;
 }
+
+.post-main {
+  border: none !important;
+}
+
+.post-content {
+  padding: 20px;
+}
+
+.post-comments {
+  width: 40% !important;
+  text-align: right;
+}
+
+.post-comments-content {
+  text-align: left;
+}
+
+.post-comments-content-description p {
+  display: inline !important;
+}

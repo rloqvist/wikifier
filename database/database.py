@@ -13,6 +13,7 @@ class User(UserMixin, db.Model):
     admin = db.Column(db.Boolean, nullable=False, default=False)
     pw_hash = db.Column(db.String(160))
     posts = db.relationship("Post", backref="user")
+    comments = db.relationship("Comment", backref="user")
     votes = db.relationship("Vote", backref="user")
 
     def __init__(self, username, password):
@@ -48,6 +49,12 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
     content = db.Column(db.String(1000))
+    updated = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, post_id, user_id, content):
+        self.post_id = post_id
+        self.user_id = user_id
+        self.content = content
 
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)

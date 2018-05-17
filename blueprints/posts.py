@@ -5,6 +5,8 @@ from markdown import markdown
 
 from posts.posts import create_post, get_post, delete_post, update_post
 from posts.votes import vote, has_voted
+from posts.comments import list_comments_for_post, create_comment, delete_comment
+from posts.timing_helper import calculate_time_ago
 
 post_pages = Blueprint('post_pages', __name__, template_folder='templates')
 
@@ -28,13 +30,17 @@ def onViewPost(post_id):
 
     post = get_post(post_id)
     user_id = current_user.id
+    comments = list_comments_for_post(post_id)
 
     if not post:
         return redirect('/post')
 
     data = {
         'post': post,
-        'voted': has_voted(post_id, current_user.id)
+        'voted': has_voted(post_id, current_user.id),
+        'comments': comments,
+        'markdown': markdown,
+        'time_ago': calculate_time_ago,
     }
 
     return render('view_post.html', **data)
@@ -66,6 +72,22 @@ def onEditPost(post_id):
 def onPostVote(post_id):
     user_id = current_user.id
     vote_id = vote(post_id, user_id)
+    return redirect(url_for('post_pages.onViewPost', post_id=post_id))
+
+@post_pages.route('/post/<int:post_id>/comment', methods=['POST'])
+def onPostComment(post_id):
+    content = request.form.get('content')
+    if content:
+
+        user_id = current_user.id
+        create_comment(post_id, user_id, content)
+
+    return redirect(url_for('post_pages.onViewPost', post_id=post_id))
+
+
+@post_pages.route('/post/<int:post_id>/comment/<int:comment_id>/remove')
+def onRemovePostComment(post_id, comment_id):
+    assert delete_comment(comment_id) == comment_id
     return redirect(url_for('post_pages.onViewPost', post_id=post_id))
 
 
