@@ -6,11 +6,8 @@
 
 {% block content %}
 <div class="ui container segment">
-  <form class="ui form" method='POST' action'/post'>
-    <div class="field">
-      <label>Title</label>
-      <input type="text" name="title" value='{{ title }}'>
-    </div>
+  <h1>{{ title }}</h1>
+  <form class="ui form" method='POST' action="{{ url_for('post_pages.onEditPost', post_id=post_id) }}">
     <div class="field">
       <label>Content</label>
       <textarea name="content">{{ content }}</textarea>

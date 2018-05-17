@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request, redirect, url_for
 from flask import render_template as render
 from flask_login import login_required, current_user
 from markdown import markdown
+import json
 
 from posts.posts import create_post, get_post, delete_post, update_post
 from posts.votes import vote, has_voted
@@ -16,10 +17,14 @@ def onCreatePost():
 
         title = request.form.get('title')
         content = request.form.get('content')
+        tags = request.form.get('tags').split(',')
+
+        if not title or not content:
+            return render('create_post.html')
 
         user_id = current_user.id
 
-        post_id = create_post(user_id, title, content)
+        post_id = create_post(user_id, title, content, tags)
 
         return redirect(url_for('post_pages.onViewPost', post_id=post_id))
     else:
@@ -48,10 +53,9 @@ def onViewPost(post_id):
 @post_pages.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
 def onEditPost(post_id):
     if request.method == 'POST':
-        title = request.form.get('title')
         content = request.form.get('content')
 
-        update_post(post_id, title, content)
+        update_post(post_id, content)
 
         return redirect(url_for('post_pages.onViewPost', post_id=post_id))
     else:

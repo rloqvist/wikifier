@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request, redirect, url_for
+from flask import request, redirect, url_for, jsonify
 from flask import render_template as render
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 
@@ -7,6 +7,7 @@ from factory.app_creator import init_app
 from users.users import get_user, get_user_with_username, create_user, should_login
 from posts.posts import list_posts
 from posts.timing_helper import calculate_time_ago
+from posts.tags import list_tags
 
 from blueprints.posts import post_pages
 
@@ -53,6 +54,25 @@ def onHome():
     }
 
     return render('index.html', **data)
+
+@app.route('/tags/list')
+def onListTags():
+    results = list()
+    for tag in list_tags():
+        result = {
+            'name': tag.name,
+            'value': tag.name,
+            'text': tag.name,
+        }
+        results.append(result)
+
+    data = {
+        'success': True,
+        'results': results,
+    }
+
+    return jsonify(data)
+
 
 app.register_blueprint(post_pages)
 

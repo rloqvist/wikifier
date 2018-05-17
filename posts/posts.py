@@ -1,4 +1,5 @@
-from database.database import db, Post, Comment, Vote
+from database.database import db, Post, Comment, Vote, Tag
+from posts.tags import add_tags_to_post
 from time import time
 
 def get_post(post_id):
@@ -7,20 +8,26 @@ def get_post(post_id):
         return False
     return post
 
-def create_post(user_id, title, content):
+def create_post(user_id, title, content, tags):
+    post = Post.query.filter_by(title=title).first()
+
+    if post:
+        return False
+
     post = Post(user_id, title, content)
 
     post.updated = int(time())
+
+    add_tags_to_post(post, tags)
 
     db.session.add(post)
     db.session.commit()
 
     return post.id
 
-def update_post(post_id, title, content):
+def update_post(post_id, content):
     post = Post.query.filter_by(id=post_id).first()
 
-    post.title = title
     post.content = content
 
     post.updated = int(time())

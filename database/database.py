@@ -29,6 +29,11 @@ class User(UserMixin, db.Model):
     def set_admin(self, admin):
         self.admin = admin
 
+tags = db.Table('tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
+    db.Column('post_id', db.Integer, db.ForeignKey('post.id'), primary_key=True)
+)
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
@@ -37,7 +42,7 @@ class Post(db.Model):
     updated = db.Column(db.Integer, nullable=False)
     comments = db.relationship("Comment", backref="post")
     votes = db.relationship("Vote", backref="post")
-    tags = db.relationship("Tag", backref="post")
+    tags = db.relationship('Tag', secondary=tags)
 
     def __init__(self, user_id, title, content):
         self.user_id = user_id
@@ -65,10 +70,11 @@ class Vote(db.Model):
         self.post_id = post_id
         self.user_id = user_id
 
-
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
     name = db.Column(db.String(30), unique=True)
+
+    def __init__(self, name):
+        self.name = name
 
 db.create_all()

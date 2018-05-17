@@ -26,8 +26,10 @@
 
     {{ markdown(post.content)|safe }}
 
-    <div class="ui label">IMAX</div>
-    <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+    {% for tag in post.tags %}
+    <div class="ui label"><i class="grey tag icon"></i> {{ tag.name }}</div>
+    {% endfor %}
+    
   </div>
   <div class="ui horizontal list">
     <a class="item" href="{{ url_for('post_pages.onEditPost', post_id=post.id) }}">edit</a>
@@ -44,7 +46,7 @@
         <img class="image">
         <div class="content">
           <div class="description post-comments-content-description">
-            {{ markdown(comment.content)|safe }} - <a>{{ comment.user.username }}</a>, <i>{{ time_ago(comment.updated) }}</i>
+            {{ markdown(comment.content)|safe }} - <a>{{ comment.user.username }}</a> <i>{{ time_ago(comment.updated) }}</i>
             <a href="{{ url_for('post_pages.onRemovePostComment', post_id=post.id, comment_id=comment.id) }}">
               <i class="grey times circle icon"></i>
             </a>

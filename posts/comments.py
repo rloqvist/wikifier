@@ -25,5 +25,4 @@ def delete_comment(comment_id):
 
 def list_comments_for_post(post_id):
     comments = Comment.query.filter_by(post_id=post_id).all()
-    print(comments)
     return comments

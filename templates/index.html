@@ -56,9 +56,9 @@
             <p class="ui right floated">Posted {{ time_ago(post.updated) }} by <i>{{ post.user.username }}</i></p>
           </div>
           <div class="extra">
-            <i class="grey tag icon"></i>
-            <div class="ui label">IMAX</div>
-            <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+            {% for tag in post.tags %}
+            <div class="ui label"><i class="grey tag icon"></i> {{ tag.name }}</div>
+            {% endfor %}
           </div>
         </div>
       </div>
