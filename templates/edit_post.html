@@ -9,13 +9,14 @@
   <form class="ui form" method='POST' action'/post'>
     <div class="field">
       <label>Title</label>
-      <input type="text" name="title" placeholder="Enter a title">
+      <input type="text" name="title" value='{{ title }}'>
     </div>
     <div class="field">
       <label>Content</label>
-      <textarea name="content" placeholder="Enter some content"></textarea>
+      <textarea name="content">{{ content }}</textarea>
     </div>
     <button class="ui button" type="submit">Submit</button>
+    <a href="{{ url_for('post_pages.onViewPost', post_id=post_id) }}">Cancel</a>
   </form>
 </div>
 {% endblock %}

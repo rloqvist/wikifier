@@ -5,42 +5,77 @@
 {% endblock %}
 
 {% block content %}
-<div class="ui container segment">
+<div class="ui container">
 
   <div class="ui divided items">
-  {% for post in posts %}
 
-    <div class="item">
-      <div class='ui image'>
-        <div class="ui statistics">
-          <div class="ui grey mini statistic">
-            <div class="value">
-              {{ post.votes }}
-            </div>
-            <div class="label">
-              Votes
-            </div>
+    <div>
+      <div class="ui steps">
+        <div class="link step">
+          <i class="plus icon"></i>
+          <div class="content">
+            <div class="title">Create</div>
+            <div class="description">Create a new post by clicking on "create"</div>
           </div>
         </div>
-      </div>
-      <div class="content">
-        <a class="header" href="{{ url_for('post_pages.onViewPost', post_id=post.id) }}">{{ post.title }}</a>
-        <div class="meta">
-          <p>{{ post.content[:320] }}{% if post.content|length > 320 %} ... {% endif %}</p>
-        </div>
-        <div class="extra">
-          <div class="ui right floated primary button">
-            Buy tickets
-            <i class="right chevron icon"></i>
+        <div class="link step">
+          <i class="search icon"></i>
+          <div class="content">
+            <div class="title">View</div>
+            <div class="description">Look for posts with relevant information</div>
           </div>
-          <i class="grey tag icon"></i>
-          <div class="ui label">IMAX</div>
-          <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+        </div>
+        <div class="link step">
+          <i class="angle up icon"></i>
+          <div class="content">
+            <div class="title">Vote</div>
+            <div class="description">Vote on posts you find informative and relevant</div>
+          </div>
         </div>
       </div>
     </div>
 
-  {% endfor %}
+  {% if posts %}
+
+    {% for post in posts %}
+
+      <div class="item">
+        <div class='ui image'>
+          <div class="ui statistics">
+            <div class="ui grey mini statistic">
+              <div class="value">
+                {{ post.votes }}
+              </div>
+              <div class="label">
+                Votes
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="content">
+          <a class="header" href="{{ url_for('post_pages.onViewPost', post_id=post.id) }}">{{ post.title }}</a>
+          <div class="meta">
+            <p>{{ post.content[:320] }}{% if post.content|length > 320 %} ... {% endif %}</p>
+          </div>
+          <div class="extra">
+            <div class="ui right floated primary button">
+              Buy tickets
+              <i class="right chevron icon"></i>
+            </div>
+            <i class="grey tag icon"></i>
+            <div class="ui label">IMAX</div>
+            <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  {% else %}
+
+    <h1>No posts yet ...</h1>
+
+  {% endif %}
   </div>
 </div>
 {% endblock %}

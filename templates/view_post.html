@@ -16,7 +16,7 @@
   </div>
   <div class="ui horizontal list">
     <a class="item" href="{{ url_for('post_pages.onEditPost', post_id=post_id) }}">edit</a>
-    <a class="item">delete</a>
+    <a class="item" href="{{ url_for('post_pages.onRemovePost', post_id=post_id) }}">delete</a>
   </div>
 </div>
 {% endblock %}

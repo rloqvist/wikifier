@@ -14,7 +14,25 @@ def create_post(user_id, title, content):
 
     return post.id
 
+def update_post(post_id, title, content):
+    post = Post.query.filter_by(id=post_id).first()
+
+    post.title = title
+    post.content = content
+
+    db.session.commit()
+
+def delete_post(post_id):
+    post = Post.query.filter_by(id=post_id).first()
+
+    if not post:
+        return False
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return post_id
+
 def list_posts():
     posts = Post.query.filter().all()
-    print('posts', posts)
     return posts

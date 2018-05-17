@@ -12,6 +12,7 @@ class User(UserMixin, db.Model):
     username = db.Column(db.String(30), unique=True)
     admin = db.Column(db.Boolean, nullable=False, default=False)
     pw_hash = db.Column(db.String(160))
+    posts = db.relationship("Post", backref="user")
 
     def __init__(self, username, password):
         self.username = username
@@ -28,10 +29,12 @@ class User(UserMixin, db.Model):
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    title = db.Column(db.String(200))
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    title = db.Column(db.String(200), unique=True)
     content = db.Column(db.String(10000))
-    votes = db.Column(db.Integer, nullable=False, default=0)
+    comments = db.relationship("Comment", backref="post")
+    votes = db.relationship("Vote", backref="post")
+    tags = db.relationship("Tag", backref="post")
 
     def __init__(self, user_id, title, content):
         self.user_id = user_id
@@ -40,12 +43,18 @@ class Post(db.Model):
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
     content = db.Column(db.String(1000))
 
 class Vote(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, nullable=False)
-    post_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
+
+class Tag(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    post_id = db.Column(db.Integer, db.ForeignKey("post.id"), nullable=False)
+    name = db.Column(db.String(30), unique=True)
 
 db.create_all()
