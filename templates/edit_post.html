@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>Post</title>
+{% endblock %}
+
+{% block content %}
+<div class="ui container segment">
+  <form class="ui form" method='POST' action'/post'>
+    <div class="field">
+      <label>Title</label>
+      <input type="text" name="title" placeholder="Enter a title">
+    </div>
+    <div class="field">
+      <label>Content</label>
+      <textarea name="content" placeholder="Enter some content"></textarea>
+    </div>
+    <button class="ui button" type="submit">Submit</button>
+  </form>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

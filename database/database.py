@@ -26,4 +26,24 @@ class User(UserMixin, db.Model):
     def set_admin(self, admin):
         self.admin = admin
 
+class Post(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    content = db.Column(db.String(10000))
+    votes = db.Column(db.Integer, nullable=False, default=0)
+
+    def __init__(self, title, content):
+        self.username = username
+        self.set_password(password)
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    content = db.Column(db.String(1000))
+
+class Vote(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, nullable=False)
+    post_id = db.Column(db.Integer, nullable=False)
+
 db.create_all()

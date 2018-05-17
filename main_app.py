@@ -7,6 +7,8 @@ from markdown import markdown
 from factory.app_creator import init_app
 from users.users import get_user, get_user_with_username, create_user, should_login
 
+from blueprints.posts import post_pages
+
 app = init_app(__name__)
 
 login_manager = LoginManager()
@@ -41,8 +43,10 @@ def onLogout():
 
 @app.route('/')
 @login_required
-def index():
+def onHome():
     return render('index.html')
+
+app.register_blueprint(post_pages)
 
 if __name__ == '__main__':
     admin_user = create_user('admin', 'admin', admin=True)
