@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>{{ title }} - Wikifier</title>
+{% endblock %}
+
+{% block content %}
+<div class="ui container">
+  <h1>{{ title }}</h1>
+  <div class="ui vertical segment">
+
+    {{ content|safe }}
+
+    <div class="ui label">IMAX</div>
+    <div class="ui label"><i class="globe icon"></i> Additional Languages</div>
+  </div>
+  <div class="ui horizontal list">
+    <a class="item" href="{{ url_for('post_pages.onEditPost', post_id=post_id) }}">edit</a>
+    <a class="item">delete</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

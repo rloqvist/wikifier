@@ -29,12 +29,14 @@ class User(UserMixin, db.Model):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, nullable=False)
+    title = db.Column(db.String(200))
     content = db.Column(db.String(10000))
     votes = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, title, content):
-        self.username = username
-        self.set_password(password)
+    def __init__(self, user_id, title, content):
+        self.user_id = user_id
+        self.title = title
+        self.content = content
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)

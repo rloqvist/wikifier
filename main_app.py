@@ -6,6 +6,7 @@ from markdown import markdown
 
 from factory.app_creator import init_app
 from users.users import get_user, get_user_with_username, create_user, should_login
+from posts.posts import list_posts
 
 from blueprints.posts import post_pages
 
@@ -44,7 +45,13 @@ def onLogout():
 @app.route('/')
 @login_required
 def onHome():
-    return render('index.html')
+    posts = list_posts()
+
+    data = {
+        'posts': posts,
+    }
+
+    return render('index.html', **data)
 
 app.register_blueprint(post_pages)
 
