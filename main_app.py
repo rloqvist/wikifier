@@ -45,7 +45,6 @@ def onLogout():
     return redirect("/")
 
 @app.route('/')
-@login_required
 def onHome():
     posts = list_posts()
 

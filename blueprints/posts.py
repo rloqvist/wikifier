@@ -32,19 +32,22 @@ def onCreatePost():
         return render('create_post.html')
 
 @post_pages.route('/post/<int:post_id>')
-@login_required
 def onViewPost(post_id):
 
     post = get_post(post_id)
-    user_id = current_user.id
     comments = list_comments_for_post(post_id)
+
+    if current_user.is_anonymous:
+        voted = False
+    else:
+        voted = has_voted(post_id, current_user.id)
 
     if not post:
         return redirect('/post')
 
     data = {
         'post': post,
-        'voted': has_voted(post_id, current_user.id),
+        'voted': voted,
         'comments': comments,
         'markdown': markdown,
         'time_ago': calculate_time_ago,

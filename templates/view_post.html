@@ -12,11 +12,13 @@
 <div class="ui container vertical segment post-main">
   <div class="ui left very close rail">
     <div class="ui grey statistic">
+      {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == post.user_id ) %}
       <div class="label">
         <a href="{{ url_for('post_pages.onPostVote', post_id=post.id) }}">
           <i class="huge {% if voted %}orange{% else %}grey{% endif %} triangle up icon"></i>
         </a>
       </div>
+      {% endif %}
       <div class="value">
         {{ post.votes|length }}
       </div>
@@ -29,11 +31,13 @@
     {% for tag in post.tags %}
     <div class="ui label"><i class="grey tag icon"></i> {{ tag.name }}</div>
     {% endfor %}
-    
+
   </div>
   <div class="ui horizontal list">
+    {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == post.user_id ) %}
     <a class="item" href="{{ url_for('post_pages.onEditPost', post_id=post.id) }}">edit</a>
     <a class="item" href="{{ url_for('post_pages.onRemovePost', post_id=post.id) }}">delete</a>
+    {% endif %}
   </div>
 </div>
 
@@ -47,9 +51,12 @@
         <div class="content">
           <div class="description post-comments-content-description">
             {{ markdown(comment.content)|safe }} - <a>{{ comment.user.username }}</a> <i>{{ time_ago(comment.updated) }}</i>
+
+            {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == post.user_id ) %}
             <a href="{{ url_for('post_pages.onRemovePostComment', post_id=post.id, comment_id=comment.id) }}">
               <i class="grey times circle icon"></i>
             </a>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -58,12 +65,14 @@
 
   </div>
 
+  {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == post.user_id ) %}
   <form class="ui form" method='POST' action="{{ url_for('post_pages.onPostComment', post_id=post.id) }}">
     <div class="field">
       <textarea name="content" placeholder="Comment" rows=2></textarea>
     </div>
     <button class="ui button" type="submit">Add comment</button>
   </form>
+  {% endif %}
 
 </div>
 
