@@ -52,3 +52,39 @@ def delete_user(user_id):
     db.session.commit()
 
     return True
+
+def change_password(user_id, password):
+    user = User.query.filter_by(id=user_id).first()
+
+    if not user:
+        return False
+
+    user.set_password(password)
+
+    db.session.commit()
+
+    return user.id
+
+def change_password_with_username(username, password):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return False
+
+    user.set_password(password)
+
+    db.session.commit()
+
+    return user.id
+
+def make_admin(username):
+    user = User.query.filter_by(username=username).first()
+
+    if not user:
+        return False
+
+    user.admin = True
+
+    db.session.commit()
+
+    return user.id

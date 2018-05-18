@@ -12,6 +12,7 @@ from posts.timing_helper import calculate_time_ago
 post_pages = Blueprint('post_pages', __name__, template_folder='templates')
 
 @post_pages.route('/post', methods=['GET', 'POST'])
+@login_required
 def onCreatePost():
     if request.method == 'POST':
 
@@ -31,6 +32,7 @@ def onCreatePost():
         return render('create_post.html')
 
 @post_pages.route('/post/<int:post_id>')
+@login_required
 def onViewPost(post_id):
 
     post = get_post(post_id)
@@ -51,6 +53,7 @@ def onViewPost(post_id):
     return render('view_post.html', **data)
 
 @post_pages.route('/post/<int:post_id>/edit', methods=['GET', 'POST'])
+@login_required
 def onEditPost(post_id):
     if request.method == 'POST':
         content = request.form.get('content')
@@ -73,12 +76,14 @@ def onEditPost(post_id):
         return render('edit_post.html', **data)
 
 @post_pages.route('/post/<int:post_id>/vote')
+@login_required
 def onPostVote(post_id):
     user_id = current_user.id
     vote_id = vote(post_id, user_id)
     return redirect(url_for('post_pages.onViewPost', post_id=post_id))
 
 @post_pages.route('/post/<int:post_id>/comment', methods=['POST'])
+@login_required
 def onPostComment(post_id):
     content = request.form.get('content')
     if content:
@@ -90,12 +95,14 @@ def onPostComment(post_id):
 
 
 @post_pages.route('/post/<int:post_id>/comment/<int:comment_id>/remove')
+@login_required
 def onRemovePostComment(post_id, comment_id):
     assert delete_comment(comment_id) == comment_id
     return redirect(url_for('post_pages.onViewPost', post_id=post_id))
 
 
 @post_pages.route('/post/<int:post_id>/remove')
+@login_required
 def onRemovePost(post_id):
     assert delete_post(post_id) == post_id
     return redirect('/')

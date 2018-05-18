@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<title>User settings</title>
+{% endblock %}
+
+{% block content %}
+{% if not current_user.is_anonymous %}
+<div class="ui container segment">
+  <h1>Change password</h1>
+  <form class="ui form" method='POST' action="{{ url_for('user_pages.onUserPassword') }}">
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="pass1" placeholder="Password"></input>
+    </div>
+    <div class="field">
+      <label>Re-Enter Password</label>
+      <input type="password" name="pass2" placeholder="Password again"></input>
+    </div>
+    <button class="ui primary button" type="submit">Submit</button>
+    <button class="ui button" type="reset">Cancel</button>
+  </form>
+</div>
+{% endif %}
+{% if current_user.admin or current_user.is_anonymous %}
+<div class="ui container segment">
+  <h1>Create user</h1>
+  <form class="ui form" method='POST' action="{{ url_for('user_pages.onCreateUser') }}">
+    <div class="field">
+      <label>Username</label>
+      <input type="text" name="username" placeholder="Username"></input>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" name="pass1" placeholder="Password"></input>
+    </div>
+    <div class="field">
+      <label>Re-Enter Password</label>
+      <input type="password" name="pass2" placeholder="Password again"></input>
+    </div>
+    <button class="ui primary button" type="submit">Submit</button>
+    <button class="ui button" type="reset">Cancel</button>
+  </form>
+</div>
+{% endif %}
+{% if current_user.admin %}
+<div class="ui container segment">
+  <h1>Make user admin</h1>
+  <form class="ui form" method='POST' action="{{ url_for('user_pages.onUserAdmin') }}">
+    <div class="field">
+      <label>Username</label>
+      <input type="text" name="username" placeholder="Username"></input>
+    </div>
+    <button class="ui primary button" type="submit">Submit</button>
+    <button class="ui button" type="reset">Cancel</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block footer %}
+{% endblock %}

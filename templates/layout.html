@@ -34,8 +34,13 @@
               <i class="search link icon"></i>
             </div>
           </div>
-          <a class="ui item">
+          {% if not current_user.is_anonymous %}
+          <a class="ui item" href="{{ url_for('onLogout') }}">
             Logout
+          </a>
+          {% endif %}
+          <a class="ui item" href="{{ url_for('user_pages.onUserSettings') }}">
+            <i class="user icon"></i> <i>{{ current_user.username }}</i>
           </a>
         </div>
       </div>

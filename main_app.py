@@ -10,6 +10,7 @@ from posts.timing_helper import calculate_time_ago
 from posts.tags import list_tags
 
 from blueprints.posts import post_pages
+from blueprints.users import user_pages
 
 app = init_app(__name__)
 
@@ -56,6 +57,7 @@ def onHome():
     return render('index.html', **data)
 
 @app.route('/tags/list')
+@login_required
 def onListTags():
     results = list()
     for tag in list_tags():
@@ -75,6 +77,7 @@ def onListTags():
 
 
 app.register_blueprint(post_pages)
+app.register_blueprint(user_pages)
 
 if __name__ == '__main__':
     admin_user = create_user('admin', 'admin', admin=True)
