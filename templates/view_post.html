@@ -65,7 +65,7 @@
 
   </div>
 
-  {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == post.user_id ) %}
+  {% if not current_user.is_anonymous %}
   <form class="ui form" method='POST' action="{{ url_for('post_pages.onPostComment', post_id=post.id) }}">
     <div class="field">
       <textarea name="content" placeholder="Comment" rows=2></textarea>
