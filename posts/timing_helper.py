@@ -13,6 +13,6 @@ def calculate_time_ago(timestamp):
     elif minutes:
         time_str = "{0} minutes ago".format(int(minutes))
     else:
-        time_str = "just {0} seconds ago".format(int(delta))
+        time_str = "Just {0} seconds ago".format(int(delta))
 
     return time_str
