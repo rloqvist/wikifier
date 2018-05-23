@@ -7,7 +7,7 @@ from factory.app_creator import init_app
 from users.users import get_user, get_user_with_username, create_user, should_login
 from posts.posts import list_posts
 from posts.timing_helper import calculate_time_ago
-from posts.tags import list_tags
+from posts.tags import list_tags, list_tags_with_count
 
 from blueprints.posts import post_pages
 from blueprints.users import user_pages
@@ -48,6 +48,9 @@ def onLogout():
 def onHome():
     posts = list_posts()
 
+    for tag in list_tags_with_count():
+        print(tag.count)
+
     data = {
         'posts': posts,
         'time_ago': calculate_time_ago,
@@ -74,10 +77,21 @@ def onListTags():
 
     return jsonify(data)
 
+@app.route('/tags/view')
+@login_required
+def onViewTags():
+    tags = list_tags_with_count()
+    data = {
+        'tags': tags,
+    }
+    return render('view_tags.html', **data)
+
 
 app.register_blueprint(post_pages)
 app.register_blueprint(user_pages)
 
-if __name__ == '__main__':
+if not get_user(1):
     admin_user = create_user('admin', 'admin', admin=True)
+
+if __name__ == '__main__':
     app.run()
