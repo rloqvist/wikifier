@@ -1,6 +1,7 @@
 pre {
   background: #eff0f1;
   padding: 10px;
+  overflow: auto;
 }
 
 textarea {
