@@ -52,7 +52,7 @@
           <div class="description post-comments-content-description">
             {{ markdown(comment.content)|safe }} - <a>{{ comment.user.username }}</a> <i>{{ time_ago(comment.updated) }}</i>
 
-            {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == post.user_id ) %}
+            {% if not current_user.is_anonymous and ( current_user.admin or current_user.id == comment.user_id ) %}
             <a href="{{ url_for('post_pages.onRemovePostComment', post_id=post.id, comment_id=comment.id) }}">
               <i class="grey times circle icon"></i>
             </a>
