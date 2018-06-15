@@ -49,11 +49,13 @@ def onLogout():
 def onHome():
     posts = list_posts()
 
-    for tag in list_tags_with_count():
-        print(tag.count)
+    post_tag_list ={post.id:[tag.name for tag in post.tags] for post in posts}
+
+    print(post_tag_list)
 
     data = {
         'posts': posts,
+        'tags': post_tag_list,
         'time_ago': calculate_time_ago,
     }
 

@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 
+{% from "icon.html" import icon with context %}
+
 {% block head %}
 <title>Main home page</title>
 {% endblock %}
@@ -53,7 +55,7 @@
           </div>
         </div>
         <div class="content">
-          <a class="header" href="{{ url_for('post_pages.onViewPost', post_id=post.id) }}">{{ post.title }}</a>
+          <a class="header" href="{{ url_for('post_pages.onViewPost', post_id=post.id) }}">{{ icon(tags[post.id]) }}{{ post.title }}</a>
           <div class="meta">
             <p>{{ post.content[:320] }}{% if post.content|length > 320 %} ... {% endif %}</p>
             <p class="ui right floated">Posted {{ time_ago(post.updated) }} by <i>{{ post.user.username }}</i></p>
