@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
+{% from "icon.html" import icon with context %}
+
 {% block head %}
 <title>{{ post.title }} - Wikifier</title>
 {% endblock %}
 
 {% block content %}
 <div class="ui container vertical segment">
-  <h1>{{ post.title }}</h1>
+  <h1>{{ icon(tags) }}{{ post.title }}</h1>
   <small class="ui right floated">Posted {{ time_ago(post.updated) }} by <i>{{ post.user.username }}</i></small>
 </div>
 <div class="ui container vertical segment post-main">
@@ -28,8 +30,8 @@
 
     {{ markdown(post.content)|safe }}
 
-    {% for tag in post.tags %}
-    <div class="ui label"><i class="grey tag icon"></i> {{ tag.name }}</div>
+    {% for tag in tags %}
+    <div class="ui label"><i class="grey tag icon"></i> {{ tag }}</div>
     {% endfor %}
 
   </div>

@@ -45,9 +45,12 @@ def onViewPost(post_id):
     if not post:
         return redirect('/post')
 
+    tag_names = [tag.name for tag in post.tags]
+
     data = {
         'post': post,
         'voted': voted,
+        'tags': tag_names,
         'comments': comments,
         'markdown': markdown,
         'time_ago': calculate_time_ago,
