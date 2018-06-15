@@ -10,7 +10,7 @@
   <form class="ui form" method='POST' action="{{ url_for('post_pages.onEditPost', post_id=post_id) }}">
     <div class="field">
       <label>Content</label>
-      <textarea name="content">{{ content }}</textarea>
+      <textarea name="content" rows="20">{{ content }}</textarea>
     </div>
     <button class="ui button" type="submit">Submit</button>
     <a href="{{ url_for('post_pages.onViewPost', post_id=post_id) }}">Cancel</a>
