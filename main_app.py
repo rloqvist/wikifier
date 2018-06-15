@@ -11,6 +11,7 @@ from posts.tags import list_tags, list_tags_with_count
 
 from blueprints.posts import post_pages
 from blueprints.users import user_pages
+from blueprints.search import search_pages
 
 app = init_app(__name__)
 
@@ -89,6 +90,7 @@ def onViewTags():
 
 app.register_blueprint(post_pages)
 app.register_blueprint(user_pages)
+app.register_blueprint(search_pages)
 
 if not get_user(1):
     admin_user = create_user('admin', 'admin', admin=True)
