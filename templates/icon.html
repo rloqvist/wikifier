@@ -1,6 +1,12 @@
 {% macro icon(tags) %}
 
-{% if "react" in tags %}
+{% if "branches" in tags or "git" in tags or "github" in tags %}
+<i class="github icon"></i>
+{% elif "linux" in tags %}
+<i class="linux icon"></i>
+{% elif "web" in tags or "http" in tags or "html" in tags %}
+<i class="internet explorer icon"></i>
+{% elif "react" in tags %}
 <i class="react icon"></i>
 {% elif "javascript" in tags %}
 <i class="js icon"></i>
