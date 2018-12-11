@@ -9,7 +9,11 @@
   <h1>All tags with frequency</h1>
   <div class="ui grid">
     {% for tag in tags %}
-    <div class="four wide column"><div class="ui label"><i class="grey tag icon"></i> {{ tag.name }}</div> x {{ tag.count }}</div>
+    <div class="four wide column">
+      <div class="ui label">
+        <i class="grey tag icon"></i> {{ tag.name }}
+      </div> x {{ tag.count }}
+    </div>
     {% endfor %}
   </div>
 </div>
